@@ -3,59 +3,59 @@
 # @Author      : tianyunzqs
 # @Description : 
 
-
-def isMatch2(s, p):
-    """
-    :type s: str
-    :type p: str
-    :rtype: bool
-    """
-
-    if s == p:
-        return True
-
-    # INITIALIZING
-
-    # 2
-    m = len(s)
-    # 1
-    n = len(p)
-
-    T = [[False for j in range(n + 1)] for i in range(m + 1)]
-
-    T[0][0] = True
-
-    #  Deals with patterns like a* or a*b* or a*b*c*
-    for i in range(1, n + 1):
-        if p[i - 1] == '*':
-            T[0][i] = T[0][i - 2]
-
-    if not s:
-        return T[-1][-1]
-
-    s = " " + s
-    p = " " + p
-
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-
-            if s[i] == p[j] or p[j] == '.':
-                T[i][j] = T[i - 1][j - 1]
+"""
+10. Regular Expression Matching
+Hard
 
 
-            elif p[j] == '*':
-                if j > 1:
-                    T[i][j] = T[i][j - 2]
+Given an input string (s) and a pattern (p), implement regular expression matching with support for '.' and '*'.
 
-                if s[i] == p[j - 1] or p[j - 1] == '.':
-                    T[i][j] = T[i][j] or T[i - 1][j]
-            else:
-                T[i][j] = False
+'.' Matches any single character.
+'*' Matches zero or more of the preceding element.
+The matching should cover the entire input string (not partial).
 
-    return T[i][j]
+Note:
+
+s could be empty and contains only lowercase letters a-z.
+p could be empty and contains only lowercase letters a-z, and characters like . or *.
+Example 1:
+
+Input:
+s = "aa"
+p = "a"
+Output: false
+Explanation: "a" does not match the entire string "aa".
+Example 2:
+
+Input:
+s = "aa"
+p = "a*"
+Output: true
+Explanation: '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
+Example 3:
+
+Input:
+s = "ab"
+p = ".*"
+Output: true
+Explanation: ".*" means "zero or more (*) of any character (.)".
+Example 4:
+
+Input:
+s = "aab"
+p = "c*a*b"
+Output: true
+Explanation: c can be repeated 0 times, a can be repeated 1 time. Therefore, it matches "aab".
+Example 5:
+
+Input:
+s = "mississippi"
+p = "mis*is*p*."
+Output: false
+"""
 
 
-def isMatch(s, p):
+def isMatch_10(s, p):
     m, n = len(s), len(p)
     # dp[i][j] 表示p[:j]是否匹配s[:i]的结果（如果能匹配，则dp[i][j]=True，否则dp[i][j]=False）
     dp = [[False for _ in range(n + 1)] for _ in range(m + 1)]
@@ -88,7 +88,59 @@ def isMatch(s, p):
     return dp[-1][-1]
 
 
-def isMatch44(s: str, p: str) -> bool:
+"""
+44. Wildcard Matching
+Hard
+
+
+Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*'.
+
+'?' Matches any single character.
+'*' Matches any sequence of characters (including the empty sequence).
+The matching should cover the entire input string (not partial).
+
+Note:
+
+s could be empty and contains only lowercase letters a-z.
+p could be empty and contains only lowercase letters a-z, and characters like ? or *.
+Example 1:
+
+Input:
+s = "aa"
+p = "a"
+Output: false
+Explanation: "a" does not match the entire string "aa".
+Example 2:
+
+Input:
+s = "aa"
+p = "*"
+Output: true
+Explanation: '*' matches any sequence.
+Example 3:
+
+Input:
+s = "cb"
+p = "?a"
+Output: false
+Explanation: '?' matches 'c', but the second letter is 'a', which does not match 'b'.
+Example 4:
+
+Input:
+s = "adceb"
+p = "*a*b"
+Output: true
+Explanation: The first '*' matches the empty sequence, while the second '*' matches the substring "dce".
+Example 5:
+
+Input:
+s = "acdcb"
+p = "a*c?b"
+Output: false
+"""
+
+
+def isMatch_44(s: str, p: str) -> bool:
     m, n = len(s), len(p)
     # dp[i][j] 表示p[:j]是否匹配s[:i]的结果（如果能匹配，则dp[i][j]=True，否则dp[i][j]=False）
     dp = [[False for _ in range(n + 1)] for _ in range(m + 1)]
@@ -121,9 +173,8 @@ def isMatch44(s: str, p: str) -> bool:
 if __name__ == '__main__':
     # s = 'ssissippi'
     # p = 's*is*ip*.'
-    # print(isMatch2(s, p)
-    # print(isMatch(s, p))
+    # print(isMatch_10(s, p)
 
     s = "aa"
     p = "a"
-    print(isMatch44(s, p))
+    print(isMatch_44(s, p))
