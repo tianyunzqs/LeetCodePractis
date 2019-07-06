@@ -3,6 +3,21 @@
 # @Author      : tianyunzqs
 # @Description : 
 
+"""
+24. Swap Nodes in Pairs
+Medium
+
+
+Given a linked list, swap every two adjacent nodes and return its head.
+
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+
+Example:
+
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+"""
+
 
 # Definition for singly-linked list.
 class ListNode:
@@ -67,63 +82,10 @@ def swapPairs(head: ListNode) -> ListNode:
     return new_head
 
 
-# 25. Reverse Nodes in k-Group
-def reverseKGroup(head, k):
-
-    # base case, look k steps forward to see if the block needs to be reversed
-    # if the length is less than k, do nothing, return the current head
-    nextHead = head
-    for i in range(0, k):
-        if not nextHead:
-            return head
-        nextHead = nextHead.next
-
-    # the length is greater than k, reverse the first k
-    prev = None
-    connect = cur = head
-    for i in range(0, k):
-        # cur.next = prev
-        # cur = cur.next
-        # prev = cur
-        cur.next, cur, prev = prev, cur.next, cur
-
-    # recursively call on rest of the list then connect two parts
-    connect.next = reverseKGroup(nextHead, k)
-
-    return prev
-
-
-def reverse_linklist(head, k1, k2):
-    # the length is greater than k, reverse the first k
-    dumpy = head
-    prev = None
-    cur = head
-    for i in range(k1):
-        prev = dumpy
-        cur = dumpy.next
-        dumpy = dumpy.next
-
-    # prev = None
-    # cur = head
-    # newhead = head
-    # while newhead:
-    for i in range(k1, k2):
-        # cur.next = prev
-        # cur = cur.next
-        # prev = cur
-        cur.next, cur, prev = prev, cur.next, cur
-        # newhead = newhead.next
-
-    return prev
-
-
 if __name__ == '__main__':
     a = [1, 2, 3, 4, 5]
     head = build_linklist(a)
     # print_linklist(head)
-
-    # new_head = swapPairs(head)
-    new_head = reverseKGroup(head, 3)
-    # new_head = reverse_linklist(head, 1, 3)
+    new_head = swapPairs(head)
     print_linklist(new_head)
 
