@@ -28,9 +28,34 @@ Output:
 """
 
 
-def subsets(nums):
+def combine(nums: list, k: int):
+    """
+    产生组合递归实现方式
+    :param nums:
+    :param k:
+    :return:
+    """
+    result = []
+    tmp = [0] * k
+    n = len(nums)
 
-    pass
+    def next_num(li=0, ni=0):
+        if ni == k:
+            result.append(list(tuple(tmp)))
+            return
+        for lj in range(li, n):
+            tmp[ni] = nums[lj]
+            next_num(lj+1, ni+1)
+
+    next_num()
+    return result
+
+
+def subsets(nums):
+    res = list()
+    for i in range(len(nums) + 1):
+        res += combine(nums, i)
+    return res
 
 
 if __name__ == '__main__':
