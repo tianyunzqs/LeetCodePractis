@@ -62,7 +62,7 @@ def deleteDuplicates(head: ListNode) -> ListNode:
             # 如果当前节点值与前后节点值都不同，则需要保存
             if pre.val != cur.val and cur.val != aft.val:
                 dummy.next = cur
-                dummy = dummy.next  # 节点前进一位，保存值
+                dummy = dummy.next  # 节点前进一位，保存值，如果不加这句，则不会保存已保存过的值
         else:
             # 如果没有前置节点，而且当前节点与后置节点不同，则保存
             if cur.val != aft.val:
