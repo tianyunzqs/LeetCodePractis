@@ -28,6 +28,33 @@ Given word = "ABCB", return false.
 """
 
 
+def find(board, word, i, j, m, n):
+    """
+    从i,j开始深度优先搜索word是否在board中
+    如果在递归中修改了可变对象的值，在递归函数结束之后要改回来
+    :param board:
+    :param word:
+    :param i:
+    :param j:
+    :param m:
+    :param n:
+    :return:
+    """
+    if not word:
+        return True
+    if i < 0 or i >= m or j < 0 or j >= n:
+        return False
+    elif word[0] == board[i][j]:
+        board[i][j] = None  # 标记
+        res = find(board, word[1:], i + 1, j, m, n) or \
+              find(board, word[1:], i - 1, j, m, n) or \
+              find(board, word[1:], i, j + 1, m, n) or \
+              find(board, word[1:], i, j - 1, m, n)
+        board[i][j] = word[0]  # 恢复原来的值
+
+        return res
+
+
 def exist(board: list, word: str) -> bool:
     if not word:
         return True
@@ -35,10 +62,12 @@ def exist(board: list, word: str) -> bool:
         return False
 
     m, n = len(board), len(board[0])
-    dp = [[False for _ in range(n)] for _ in range(m)]
-    dp[0][0] = True if len(word) == 1 and word == board[0][0] else False
-    for i in range(1, m):
-        dp[i][0] = dp[i-1][0] and
+    for i in range(m):
+        for j in range(n):
+            if find(board, word, i, j, m, n):
+                return True
+    else:
+        return False
 
 
 if __name__ == '__main__':
@@ -47,5 +76,5 @@ if __name__ == '__main__':
         ['S', 'F', 'C', 'S'],
         ['A', 'D', 'E', 'E']
     ]
-    word = "ABCCED"
+    word = "AAA"
     print(exist(board, word))
