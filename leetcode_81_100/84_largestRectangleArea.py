@@ -49,7 +49,7 @@ def largestRectangleArea2(heights) -> int:
     return max_area
 
 
-def largestRectangleArea(height):
+def largestRectangleArea(heights):
     """
     直方图矩形面积要最大的话，需要尽可能的使得连续的矩形多，并且最低一块的高度要高。
     有点像木桶原理一样，总是最低的那块板子决定桶的装水量。
@@ -72,16 +72,16 @@ def largestRectangleArea(height):
     :param height:
     :return:
     """
-    height.append(0)
+    heights.append(0)
     stack = [-1]
     ans = 0
-    for i in range(len(height)):
-        while height[i] < height[stack[-1]]:
-            h = height[stack.pop()]
+    for i in range(len(heights)):
+        while heights[i] < heights[stack[-1]]:
+            h = heights[stack.pop()]
             w = i - stack[-1] - 1
             ans = max(ans, h * w)
         stack.append(i)
-    height.pop()
+    heights.pop()
     return ans
 
 
