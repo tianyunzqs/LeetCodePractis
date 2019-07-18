@@ -58,6 +58,19 @@ def subsets(nums):
     return res
 
 
+def subsets2(nums):
+    res = [[]]
+    nums.sort()
+    for num in nums:
+        # tmp = []
+        # for r in res:
+        #     tmp += [r + [num]]
+        # res += tmp
+        res += [i + [num] for i in res]
+    return res
+
+
 if __name__ == '__main__':
     nums = [1, 2, 3]
     print(subsets(nums))
+    print(subsets2(nums))
