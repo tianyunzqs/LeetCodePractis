@@ -49,12 +49,17 @@ def deleteDuplicates(head: ListNode) -> ListNode:
         pre = cur
         cur = cur.next
 
+    # 因为cur是后一个节点，因此需要加上前一个节点
+    dummy.next = pre
+
     return dummy2.next
 
 
 if __name__ == '__main__':
-    # a = [1, 2, 3, 3, 4, 4, 5]
-    a = [1, 1, 1, 4, 5]
+    a = [1, 2, 3, 3, 4, 4, 5]
+    # a = [1, 1, 1, 4, 5]
+    # a = [1,1,2,3,3]
+    # a = [1, 2, 3, 3]
     head = build_linklist(a)
     print_linklist(head)
     new_head = deleteDuplicates(head)
