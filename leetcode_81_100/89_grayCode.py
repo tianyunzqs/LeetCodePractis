@@ -51,7 +51,7 @@ def grayCode(n: int):
     1 1 1         0 1 0           1 1 0 (6)
     1 0 1         0 0 1           1 1 1 (7)
     1 0 0
-
+    
     X = Y & -Y
     :param n:
     :return:
@@ -65,8 +65,8 @@ def grayCode(n: int):
 def n_and_n(n):
     """
     i与-i相与
-    :param n:
-    :return:
+    :param n: 
+    :return: 
     """
     for i in range(n):
         print(i, i & -i)
@@ -75,8 +75,8 @@ def n_and_n(n):
 def _2_n(n):
     """
     2的倍数
-    :param n:
-    :return:
+    :param n: 
+    :return: 
     """
     for i in range(n):
         print(i, i & -i == i, i & (i-1) == 0)
