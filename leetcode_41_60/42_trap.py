@@ -3,6 +3,22 @@
 # @Author      : tianyunzqs
 # @Description : 
 
+"""
+42. Trapping Rain Water
+Hard
+
+Given n non-negative integers representing an elevation map where the width of each bar is 1,
+compute how much water it is able to trap after raining.
+
+
+The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1].
+In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image!
+
+Example:
+Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+"""
+
 
 def trap(height):
     """
@@ -28,7 +44,33 @@ def trap(height):
     return water
 
 
-height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]  # 6
-# height = [3, 2, 1]
-height = [3, 2, 1, 0, 1, 2]
-print(trap(height))
+def trap2(height):
+    """
+    栈
+    :param height:
+    :return:
+    """
+    st = []
+    i, n = 0, len(height)
+    res = 0
+    while i < n:
+        if not st or height[i] <= height[st[-1]]:
+            st.append(i)
+            i += 1
+        else:
+            t = st[-1]
+            st.pop()
+            if not st:
+                continue
+            h = min(height[i], height[st[-1]]) - height[t]
+            w = i - st[-1] - 1
+            res += h * w
+    return res
+
+
+if __name__ == '__main__':
+    height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]  # 6
+    # height = [3, 2, 1]
+    # height = [3, 2, 1, 0, 1, 2]
+    print(trap2(height))
+    print(trap3(height))
