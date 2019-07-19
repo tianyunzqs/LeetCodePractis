@@ -64,8 +64,11 @@ def reverse(head, other_head):
 
 
 def reverseBetween(head: ListNode, m: int, n: int) -> ListNode:
+    # 保存小于m的节点
     dummy1 = p1 = ListNode(-1)
+    # 保存m~n之间的节点（需要翻转的节点）
     dummy2 = p2 = ListNode(-1)
+    # 保存大于n的节点
     dummy3 = p3 = ListNode(-1)
     cur = head
     cnt = 0
