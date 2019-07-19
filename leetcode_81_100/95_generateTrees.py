@@ -97,8 +97,27 @@ def insert_node_to_bst(root: TreeNode, val):
     return root
 
 
-def generateTrees(n: int):
-    pass
+def dfs(start, end):
+    if start == end:
+        return None
+    result = []
+    for i in range(start, end):
+        for l in dfs(start, i) or [None]:
+            for r in dfs(i + 1, end) or [None]:
+                node = TreeNode(i)
+                node.left, node.right = l, r
+                result.append(node)
+    return result
+
+
+def generateTrees(n):
+    """
+    :type n: int
+    :rtype: List[TreeNode]
+    """
+    if n == 0:
+        return [[]]
+    return dfs(1, n + 1)
 
 
 if __name__ == '__main__':
