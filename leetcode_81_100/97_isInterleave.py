@@ -21,6 +21,13 @@ Output: false
 
 
 def isInterleave(s1: str, s2: str, s3: str) -> bool:
+    """
+    递归解法，TLE（Time Limit Exceeded）
+    :param s1:
+    :param s2:
+    :param s3:
+    :return:
+    """
     if len(s3) != len(s1 + s2):
         return False
     if not s1 or not s2:
@@ -47,6 +54,42 @@ def isInterleave(s1: str, s2: str, s3: str) -> bool:
             return False
 
 
+def isInterleave2(s1: str, s2: str, s3: str) -> bool:
+    if len(s3) != len(s1 + s2):
+        return False
+
+    dp = [True for _ in range(len(s1) + 1)]
+    for i in range(len(s1)):
+        dp[i + 1] = dp[i] and s1[i] == s3[i]
+
+    for j in range(1, len(s2) + 1):
+        dp[0] = dp[0] and s2[j - 1] == s3[j - 1]
+        for i in range(1, len(s1) + 1):
+            dp[i] = dp[i - 1] and s1[i - 1] == s3[i + j - 1] or dp[i] and s2[j - 1] == s3[i + j - 1]
+
+    return dp[len(s1)]
+
+
+def isInterleave3(s1: str, s2: str, s3: str) -> bool:
+    if len(s3) != len(s1 + s2):
+        return False
+
+    dp = [[True for _ in range(len(s2) + 1)] for _ in range(len(s1) + 1)]
+
+    for i in range(len(s1) + 1):
+        for j in range(len(s2) + 1):
+            if i == 0 and j == 0:
+                dp[i][j] = True
+            elif i == 0:
+                dp[i][j] = dp[i][j - 1] and s2[j - 1] == s3[i + j - 1]
+            elif j == 0:
+                dp[i][j] = dp[i - 1][j] and s1[i - 1] == s3[i + j - 1]
+            else:
+                dp[i][j] = (dp[i - 1][j] and s1[i - 1] == s3[i + j - 1]) or (dp[i][j - 1] and s2[j - 1] == s3[i + j - 1])
+
+    return dp[len(s1)][len(s2)]
+
+
 if __name__ == '__main__':
     s1 = "aabcc"
     s2 = "dbbca"
@@ -63,4 +106,6 @@ if __name__ == '__main__':
     s1 = "bbbbbabbbbabaababaaaabbababbaaabbabbaaabaaaaababbbababbbbbabbbbababbabaabababbbaabababababbbaaababaa"
     s2 = "babaaaabbababbbabbbbaabaabbaabbbbaabaaabaababaaaabaaabbaaabaaaabaabaabbbbbbbbbbbabaaabbababbabbabaab"
     s3 = "babbbabbbaaabbababbbbababaabbabaabaaabbbbabbbaaabbbaaaaabbbbaabbaaabababbaaaaaabababbababaababbababbbababbbbaaaabaabbabbaaaaabbabbaaaabbbaabaaabaababaababbaaabbbbbabbbbaabbabaabbbbabaaabbababbabbabbab"
-    print(isInterleave(s1, s2, s3))
+    # print(isInterleave(s1, s2, s3))
+    print(isInterleave2(s1, s2, s3))
+    print(isInterleave3(s1, s2, s3))
