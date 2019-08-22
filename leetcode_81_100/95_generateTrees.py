@@ -51,7 +51,7 @@ def build_tree(nums, cnt=[0]):
 
     x = nums[cnt[0]]
     cnt[0] += 1
-    if not x:
+    if x is None:
         bt = None
     else:
         bt = TreeNode(x)
