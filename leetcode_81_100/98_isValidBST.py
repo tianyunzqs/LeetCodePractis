@@ -58,7 +58,7 @@ def build_tree(nums, cnt=[0]):
 
     x = nums[cnt[0]]
     cnt[0] += 1
-    if not x:
+    if x is None:
         bt = None
     else:
         bt = TreeNode(x)
@@ -82,28 +82,47 @@ def print_tree(root: TreeNode):
         print(None, end='->')
 
 
-def isValidBST(root: TreeNode) -> bool:
-    if not root:
-        return True
+# def isValidBST(root: TreeNode) -> bool:
+#     if not root:
+#         return True
+#
+#     if root.left and root.right:
+#         if root.left.val < root.val < root.right.val:
+#             return isValidBST(root.left) and isValidBST(root.right)
+#         else:
+#             return False
+#
+#     elif root.left:
+#         if root.left.val < root.val:
+#             return isValidBST(root.left)
+#         else:
+#             return False
+#     elif root.right:
+#         if root.right.val > root.val:
+#             return isValidBST(root.right)
+#         else:
+#             return False
+#     else:
+#         return True
 
-    if root.left and root.right:
-        if root.left.val < root.val < root.right.val:
-            return isValidBST(root.left) and isValidBST(root.right)
-        else:
-            return False
 
-    elif root.left:
-        if root.left.val < root.val:
-            return isValidBST(root.left)
-        else:
+def isValidBST(root):
+    """
+    :type root: TreeNode
+    :rtype: bool
+    """
+
+    def valid(node, lower, upper):
+        if not node:
+            return True
+        # is not None 是为了防止节点值为0
+        if lower is not None and node.val <= lower:
             return False
-    elif root.right:
-        if root.right.val > root.val:
-            return isValidBST(root.right)
-        else:
+        if upper is not None and node.val >= upper:
             return False
-    else:
-        return True
+        return valid(node.left, lower, node.val) and valid(node.right, node.val, upper)
+
+    return valid(root, None, None)
 
 
 if __name__ == '__main__':
@@ -112,6 +131,7 @@ if __name__ == '__main__':
     nums = [2, 1, None, None, 3, None, None]
     nums = []
     nums = [10, 5, None, None, 15, 6, None, None, 20, None, None]
+    nums = [0, None, -1, None, None]
     root = build_tree(nums)
     print_tree(root)
     print(isValidBST(root))
