@@ -73,7 +73,7 @@ def wordBreak(s: str, wordDict: list) -> bool:
     dp[i]表示子串s[0:i]能否被分割成wordDict中的词语
     dp[0]表示子串s[0:0]=''，空串默认可以分割，因此dp[0] = True
     这里dp = [False for _ in range(len(s) + 1)]
-    多加一个位置是因为在遍历的时候，需要遍历子串s[0: i+1]，包含位置i
+    多加一个位置是因为在遍历的时候，需要遍历子串s[0: i+1]，包含位置0和位置i
     if判断条件里添加dp[j]的限定是因为如果子串s[0:j]不能分割为wordDict中词语组合，s[j:i]子串就可以不用判断了
     :param s:
     :param wordDict:
