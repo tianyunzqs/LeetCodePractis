@@ -39,7 +39,6 @@ def minCut(s: str) -> int:
     abccbaa: 1
     abccbaab: 2
     abccbaabc: 3
-    dp[i] =
     :param s:
     :return:
     """
