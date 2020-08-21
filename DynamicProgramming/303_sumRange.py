@@ -26,7 +26,7 @@ There are many calls to sumRange function.
 from typing import List
 
 
-class NumArray:
+class NumArray0:
     """
     元素之和
     """
@@ -37,6 +37,20 @@ class NumArray:
         if not self.nums:
             return 0
         return sum(self.nums[i:j+1])
+
+
+class NumArray:
+    """
+    在init函数中计算累计和，主要是为了提升实时计算时的速度
+    跟更动态规划的思想相吻合
+    """
+    def __init__(self, nums: List[int]):
+        self.accu = [0]
+        for num in nums:
+            self.accu.append(self.accu[-1] + num)
+
+    def sumRange(self, i: int, j: int) -> int:
+        return self.accu[j+1] - self.accu[i]
 
 
 # Your NumArray object will be instantiated and called as such:
