@@ -171,6 +171,24 @@ def print_tree_max_depth(root: TreeNode):
     return max_left_depth + 1 if max_left_depth > max_right_depth else max_right_depth + 1
 
 
+def build_tree_by_preorder_and_inorder2(preorder: list, inorder: list) -> TreeNode:
+    if not preorder or not inorder or len(preorder) != len(inorder):
+        return
+    i, j = 0, 0
+    root = TreeNode(preorder[i])
+    # 将前序遍历列表和中序遍历列表划分为左右子树的前序遍历列表和中序遍历列表
+    j = inorder.index(preorder[i])
+    # 左子树的前序遍历列表和中序遍历列表
+    left_preorder = preorder[i + 1: j + 1]
+    left_inorder = inorder[:j]
+    # 左子树的前序遍历列表和中序遍历列表
+    right_preorder = preorder[j - i + 1:]
+    right_inorder = inorder[j + 1:]
+    root.left = build_tree_by_preorder_and_inorder(left_preorder, left_inorder)
+    root.right = build_tree_by_preorder_and_inorder(right_preorder, right_inorder)
+    return root
+
+
 def build_tree_by_preorder_and_inorder(preorder: list, inorder: list) -> TreeNode:
     if not preorder or not inorder or len(preorder) != len(inorder):
         return
@@ -226,7 +244,7 @@ def view_tree(root, save_path='Binary_Tree.gv', label=False):
 
 
 class Solution:
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+    def buildTree2(self, preorder: List[int], inorder: List[int]) -> TreeNode:
         if not preorder or not inorder or len(preorder) != len(inorder):
             return
         i, j = 0, 0
@@ -243,6 +261,23 @@ class Solution:
             i = j + 1
             root.left = self.buildTree(left_preorder, left_inorder)
             root.right = self.buildTree(right_preorder, right_inorder)
+        return root
+
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if not preorder or not inorder or len(preorder) != len(inorder):
+            return
+        i, j = 0, 0
+        root = TreeNode(preorder[i])
+        # 将前序遍历列表和中序遍历列表划分为左右子树的前序遍历列表和中序遍历列表
+        j = inorder.index(preorder[i])
+        # 左子树的前序遍历列表和中序遍历列表
+        left_preorder = preorder[i+1: j+1]
+        left_inorder = inorder[:j]
+        # 左子树的前序遍历列表和中序遍历列表
+        right_preorder = preorder[j-i+1:]
+        right_inorder = inorder[j+1:]
+        root.left = self.buildTree(left_preorder, left_inorder)
+        root.right = self.buildTree(right_preorder, right_inorder)
         return root
 
 
